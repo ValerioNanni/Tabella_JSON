@@ -13,12 +13,9 @@
   <body>
     <table >
       <thead>
-       <tr><th>Colonna1</th><th>Colonna2</th></tr>
+       <tr><th>Nome</th><th>Email</th></tr>
       </thead>
       <tbody>
-        <tr><td> Casella1.1 </td><td> Casella1.2 </td></tr>
-        <tr><td> Casella2.1 </td><td> Casella2.2 </td></tr>
-        <tr><td> Casella3.1 </td><td> Casella3.2 </td></tr>
       </tbody>
     </table>
     <style>
@@ -30,5 +27,23 @@
             padding:8px
         }
     </style>
+
+    <script>
+        fetch('utente.json')
+            .then(response =>{
+                if(response.ok){
+                    throw new Error('Errore nel caricamento del JSON')
+                }
+                return response.json();
+            })
+            .then(utenti => {
+                const tbody= document.querySelector('#userTable tbody');
+                utenti.array.forEach(utente => {
+                    const row= document.createElement('tr');
+                    row.innerHTML= '<td>${utente.nome}</td><td>${utente.email}</td>';
+                    tbody.appendChild(row);
+                });
+            })
+    </script>
   </body>
 </html>
